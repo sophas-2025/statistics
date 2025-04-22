@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "Enter"
@@ -8,6 +9,25 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+
+  sidebar:
+    - id: index
+      title: "Intro"
+      style: "floating"
+      collapse-level: 2
+      align: left
+      contents:
+        - "---"
+        - section: Practice Problems
+          contents:
+            - index.qmd
+            - text: "week 1"
+              href: week-1/pw-1.qmd
+            - text: "week 2"
+              href: week-2/pw-2.qmd
+            - text: "week 3"
+              href: week-3/pw-3.qmd
+        - "---"
 
 format:
   html:
