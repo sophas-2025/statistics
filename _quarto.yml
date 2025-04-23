@@ -22,11 +22,21 @@ website:
           contents:
             - index.qmd
             - text: "week 1"
-              href: week-1/pw-1.qmd
+              href: week-1/pwq-1.qmd
             - text: "week 2"
-              href: week-2/pw-2.qmd
+              href: week-2/pwq-2.qmd
             - text: "week 3"
-              href: week-3/pw-3.qmd
+              href: week-3/pwq-3.qmd
+        - "---"
+        - section: Practice Answers
+          contents:
+            - index.qmd
+            - text: "week 1"
+              href: week-1/pwa-1.qmd
+            - text: "week 2"
+              href: week-2/pwa-2.qmd
+            - text: "week 3"
+              href: week-3/pwa-3.qmd
         - "---"
 
 format:
