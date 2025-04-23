@@ -1,0 +1,835 @@
+---
+title: "Practice Set - Week 3"
+execute:
+  error: false
+  echo: true
+engine: julia
+date: today
+date-format: "DD-MMM-YYYY"
+author:
+  - SOPHAS
+code-annotations: hover
+format:
+  html:
+    mermaid:
+      theme: neutral
+    include-in-header:
+      text: |
+        <style>
+          .header-container {
+            width: 100%;
+          }
+          .logo {
+            display: block;
+            width: 150px;
+            margin-left: -2.5%;
+          }
+        </style>
+        <link rel = "icon" href="../logo/html-logo.jpg" sizes="32x32" />
+    include-before-body:
+      text: |
+        <div class="header-container">
+          <img src= "../logo/sophas-logo.png" width="240" height="90">
+        </div>
+    self-contained-math: true
+    anchor-sections: true
+    theme: default
+    toc: true
+    toc-depth: 4
+    toc-expand: 2
+    toc-location: left
+    toc-title: Contents
+    number-sections: true
+    code-summary: Show/Hide Code
+    code-overflow: wrap
+    code-tools:
+      caption: Download tutorial
+      source: true
+fig-format: svg
+fig-width: 8
+fig-height: 6
+self-contained: true
+---
+
+Q1. Define and explain the following terms:
+
+- Random phenomenon
+
+- Statistical experiment
+
+- Random event
+
+- Sample space
+
+**Answer**
+
+- **Random phenomenon**: It is described as a situation in which we know what outcomes can occur, 
+but whose precise outcome is not certainly known. 
+
+- **Statistical experiment**: It is a procedure that has a clearly defined set of possible outcomes 
+and can be repeated under identical conditions, where each outcome occurs by chance. 
+
+- **Random event**: It is an outcome or a group of outcomes from a random experiment 
+whose result cannot be predicted with certainty before the experiment is performed. 
+Even if the experiment is repeated under the same conditions, 
+it can produce different outcomes each time due to chance.
+
+- **Sample space**: It is the set of all possible outcomes of a random experiment. 
+It encompasses every potential result that can occur, 
+providing a comprehensive framework for analyzing probabilities.
+
+```{mermaid}
+%%| echo: false
+---
+title: Coin Toss (Statistical Experiment) 
+---
+flowchart TB
+  A((Coin is tossed))
+  A -->|Random Phenomenon| B{Outcome}
+  B --> |Random Event|C(Heads)
+  B --> |Random Event|D(Tails)
+  F("Sample Space: {Heads,Tails}")
+```
+
+--------------------------------------------------------------------------------------------
+
+Q2. What is probability? Discuss its importance.
+
+**Answer**
+
+Probability is a fundamental concept in statistics, 
+playing a crucial role in understanding and quantifying uncertainty in various phenomena.
+
+It's importance lies in its ability to support informed decision-making. 
+Probability allows statisticians and researchers to make predictions about future events, 
+draw inferences about a population based on sample data, and assess the reliability of those inferences. 
+It also forms the foundation for many statistical methods, 
+including hypothesis testing, confidence intervals, and regression analysis. 
+Overall, probability is essential for modeling randomness, managing risk, 
+and making sound conclusions in the presence of uncertainty.
+
+--------------------------------------------------------------------------------------------
+
+Q3. Differentiate between the following pairs of concepts:
+
+- Elementary event and compound event
+
+- Mutually exclusive events and overlapping events
+
+- Sample space and sample point
+
+**Answer**
+
+1.
+| Elementary Event                             | Compound Event                                        |
+|--------------------------------------------------|-----------------------------------------------------------|
+| An event that consists of a single outcome.      | An event that consists of two or more outcomes.           |
+| Example: Getting a 4 when a die is rolled.       | Example: Getting an even number (2, 4, or 6) on a die.    |
+\
+
+2.
+| Mutually Exclusive Events                                       | Overlapping Events                                                              |
+|---------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| Events that cannot occur at the same time.                          | Events that can occur at the same time.                                             |
+| The occurrence of one event rules out the occurrence of the other. | The events share at least one common outcome.                                       |
+| Example: Getting a head or a tail in a single coin toss.           | Example: Drawing a red card or a king from a deck (a red king belongs to both).     |
+\
+
+3.
+| Sample Space                                                      | Sample Point                                 |
+|----------------------------------------------------------------------|--------------------------------------------------|
+| The set of all possible outcomes of an experiment.                   | A single outcome from the sample space.          |
+| Denoted by 'S'.                                                      | Each element of the sample space.                |
+| Example: For tossing a coin twice, S = {HH, HT, TH, TT}.             | Example: HT is a sample point.                   |
+
+--------------------------------------------------------------------------------------------
+
+Q4. Three unbiased coins are tossed. Calculate the probability of:
+
+- All heads
+
+- Two heads
+
+- One head
+
+- At least one head
+
+- At least two heads
+
+- All tails
+
+**Answer**
+
+The sample space for 3 unbiased coin tosses is $2^3 = 8$ outcomes, 
+since each coin has 2 possible results (Head or Tail):
+
+```{mermaid}
+%%| echo: false
+flowchart TB
+    A[Start] --> B1[H]
+    A --> B2[T]
+
+    B1 --> C1[HH]
+    B1 --> C2[HT]
+    B2 --> C3[TH]
+    B2 --> C4[TT]
+
+    C1 --> D1[HHH]
+    C1 --> D2[HHT]
+    C2 --> D3[HTH]
+    C2 --> D4[HTT]
+    C3 --> D5[THH]
+    C3 --> D6[THT]
+    C4 --> D7[TTH]
+    C4 --> D8[TTT]
+```
+
+Each coin has two outcomes: Head $\small{(H = 1)}$ or Tail $\small{(T = 0)}$
+
+:::{.callout-note appearance="minimal"}
+
+# Binomial Distribution
+
+In a coin toss experiment, each toss is a Bernoulli trial (success = heads with probability $\small{p}$ , failure = tails with probability $\small{1-p}$).
+
+The binomial distribution models the probability of getting exactly $\small{k}$ successes (e.g., heads) in $\small{n}$ 
+independent tosses.
+
+- The probability mass function (PMF) gives the probability of getting exactly $\small{k}$ heads: $\small{P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}}$
+
+-  The cumulative distribution function (CDF) gives the probability of getting at most $\small{k}$ heads: $\small{P(X \le k) = \sum_{i=0}^{k} \binom{n}{i} p^i (1 - p)^{n - i}}$
+
+This will be covered further in the binomial distribution section.
+
+:::
+
+:::{.callout-note appearance="minimal"}
+
+Julia uses the `//` operator to create exact [rational numbers](https://docs.julialang.org/en/v1/manual/complex-and-rational-numbers/#Rational-Numbers) as ratios of integers.
+
+:::
+
+```{julia}
+# Create PMF and CDF functions
+
+my_pmf(k::Int64; n::Int64=3, p::Rational=1//2) = binomial(n, k) * p^k * (1 - p)^(n - k)
+
+my_cdf(k::Int64; n::Int64=3, p::Rational=1//2) = sum(binomial(n, i) * p^i * (1 - p)^(n - i) for i in 0:k)
+
+```
+
+:::{.callout-note appearance="minimal"}
+
+In Julia, functions can include [keyword arguments](https://docs.julialang.org/en/v1/manual/functions/#Keyword-Arguments) that provide default values.
+
+For example, in the function `my_pmf(k::Int64; n::Int64=3, p::Rational=1//2)`, `n` and `p` are keyword arguments with default values of `3` and `1/2`, respectively.
+
+These can be overridden by specifying them explicitly when calling the function, like `my_pmf(2; n=5, p=2//3)`
+
+:::
+
+- $\small{P(\text{All heads}) \Rightarrow P(X = 3)}$
+
+```{julia}
+all_heads = my_pmf(3)
+
+println("P(X = 3): $all_heads")
+```
+
+- $\small{P(\text{Two heads}) \Rightarrow P(X = 2)}$
+
+```{julia}
+two_heads = my_pmf(2)
+
+println("P(X = 3): $two_heads")
+```
+
+- $\small{P(\text{One head}) \Rightarrow P(X = 1)}$
+
+```{julia}
+one_head = my_pmf(1)
+
+println("P(X = 3): $one_head")
+```
+
+- $\small{P(X = \text{Atleast one head}) \Rightarrow P(X \ge 1) \Rightarrow 1 - P(X < 1) \Rightarrow 1 - P(X \le 0)}$
+
+```{julia}
+atleast_1_head = 1 - my_cdf(0)
+
+println("P(X ≥ 1): $atleast_1_head")
+```
+
+:::{.callout-tip appearance="minimal"}
+In a discrete distribution, $\small{P(X < k) = P(X \le k-1)}$ because there are no values between the integers.
+:::
+
+- $\small{P(X = \text{Atleast two heads}) \Rightarrow P(X \ge 2) \Rightarrow 1 - P(X < 2) \Rightarrow 1 - P(X \le 1)}$
+
+```{julia}
+atleast_2_heads = 1 - my_cdf(1)
+
+println("P(X ≥ 2): $atleast_2_heads")
+```
+
+- $\small{P(X = \text{All tails}) \Rightarrow P(X = 0)}$
+
+```{julia}
+all_tails = my_pmf(0)
+
+println("P(X = 0): $all_tails")
+```
+
+| Event                    | Favorable Outcomes                        | Probability                   |
+|--------------------------|-------------------------------------------|-------------------------------|
+| All heads                | (H, H, H)                                 | $\small{\dfrac{1}{8}}$                |
+| Two heads                | (H, H, T), (H, T, H), (T, H, H)           | $\small{\dfrac{3}{8}}$                |
+| One head                 | (H, T, T), (T, H, T), (T, T, H)           | $\small{\dfrac{3}{8}}$                |
+| At least one head        | All outcomes except (T, T, T)             | $\small{\dfrac{7}{8}}$                |
+| At least two heads       | (H, H, T), (H, T, H), (T, H, H), (H, H, H)| $\small{\dfrac{4}{8} = \dfrac{1}{2}}$ |
+| All tails                | (T, T, T)                                 | $\small{\dfrac{1}{8}}$                |
+
+--------------------------------------------------------------------------------------------
+
+Q5. A card is drawn from a well-shuffled deck of 52 cards. 
+Determine the probability of drawing a card that is neither a heart nor a king.
+
+**Answer**
+
+We need to find the probability of drawing a card that is neither a heart nor a king, i.e., $\small{P(\text{Neither a heart nor a king})}$:
+
+- Total cards = $\small{52}$
+
+- Hearts = $\small{13}$, Kings = $\small{4}$
+
+- The king of hearts is counted twice, so we subtract $\small{1}$ to avoid double-counting
+
+- Cards that are hearts or kings = $\small{13 + 4 - 1 = 16}$
+
+- Cards that are neither = $\small{52 - 16 = 36}$
+
+- Therefore, $\small{P(\text{Neither a heart nor a king}) = \dfrac{36}{52} = \dfrac{9}{13}}$
+
+
+```{julia}
+# Given data
+deck = 52
+kings = 4
+hearts = 13
+king_hearts = 1
+
+# Cards that are neither a heart or a king
+heart_nor_king = deck - (kings + hearts - king_hearts)
+
+# Probability
+p = heart_nor_king // deck
+
+println("The P(neither a heart nor a king): $p")
+```
+
+--------------------------------------------------------------------------------------------
+
+Q6. In a single throw of two dice, find the probability of:
+
+- A total of 11
+
+- A total of 8 or 11
+
+- The same number on both dice
+
+**Answer**
+
+The sample space for a single throw of two dice:
+
+$$
+\small
+\begin{aligned}
+S = \{(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), \\
+      (2,1), (2,2), (2,3), (2,4), (2,5), (2,6), \\
+      (3,1), (3,2), (3,3), (3,4), (3,5), (3,6), \\
+      (4,1), (4,2), (4,3), (4,4), (4,5), (4,6), \\
+      (5,1), (5,2), (5,3), (5,4), (5,5), (5,6), \\
+      (6,1), (6,2), (6,3), (6,4), (6,5), (6,6)\}
+\end{aligned}
+$$
+
+- $\small{P(\text{Total} = 11)}$
+
+```{julia}
+# Total possible outcomes when rolling two dice
+total_outcomes = 6 * 6
+
+# Count outcomes where the sum is 11
+favorable_11 = 0
+
+for die1 in 1:6, die2 in 1:6
+    if die1 + die2 == 11
+        favorable_11 += 1
+    end
+end
+
+# Probability
+p_11 = favorable_11 // total_outcomes
+
+println("P(Total = 11): $p_11")
+```
+
+- $\small{P(\text{Total} = 8 \text{ or } 11)}$
+
+```{julia}
+# Total possible outcomes when rolling two dice
+total_outcomes = 6 * 6
+
+# Count outcomes where the sum is 8 or 11
+favorable_8_or_11 = 0
+
+for die1 in 1:6, die2 in 1:6
+    if die1 + die2 == 8 || die1 + die2 == 11
+        favorable_8_or_11 += 1
+    end
+end
+
+# Probability
+p_8_or_11 = favorable_8_or_11 // total_outcomes
+
+println("P(Total = 11): $p_8_or_11")
+```
+
+- $\small{P(\text{Same number on both dice})}$
+
+```{julia}
+# Total possible outcomes when rolling two dice
+total_outcomes = 6 * 6
+
+# Count favorable outcomes: same number on both dice 
+favorable_same = 0
+
+for die1 in 1:6, die2 in 1:6
+    if die1 == die2
+        favorable_same += 1
+    end
+end
+
+# Probability 
+p_same = favorable_same // total_outcomes
+
+println("P(Same number on both dice) = $p_same")
+```
+
+| Event                     | Favorable Outcomes                      | Probability        |
+|---------------------------|-----------------------------------------|--------------------|
+| Total of 11               | (5,6), (6,5)                            | $\small{\dfrac{2}{36} = \dfrac{1}{18}}$ |
+| Total of 8 or 11          | (2,6), (3,5), (4,4), (5,3), (6,2), (5,6), (6,5) | $\small{\dfrac{7}{36}}$        |
+| Same number on both dice  | (1,1), (2,2), (3,3), (4,4), (5,5), (6,6) | $\small{\dfrac{6}{36} = \dfrac{1}{6}}$  |
+
+:::{.callout-note appearance="minimal"}
+
+Julia provides a variety of [control flow constructs](https://docs.julialang.org/en/v1/manual/control-flow/), one of which is repeated evaluation using loops. There are two main types: `while` and `for` loops.
+
+:::
+
+--------------------------------------------------------------------------------------------
+
+Q7. Five men in a company of 20 are graduates. If 3 men are picked randomly, what is the probability that:
+
+- All three are graduates
+
+- At least one is a graduate
+
+**Answer**
+
+- $\small{P(\text{All three are graduates}) = \dfrac{\binom{5}{3}}{\binom{20}{3}} = \dfrac{10}{1140} = \dfrac{1}{114}}$
+
+```{julia}
+all_3 = binomial(5, 3) // binomial(20, 3)
+
+println("P(All three are graduates): $all_3")
+```
+
+- $\small{P(\text{At least one is a graduate}) = 1 - \dfrac{\binom{15}{3}}{\binom{20}{3}} = 1 - \dfrac{455}{1140} = \dfrac{685}{1140} = \dfrac{137}{228}}$
+
+```{julia}
+atleast_1 = 1 - (binomial(15, 3) // binomial(20, 3))
+
+println("P(At least one is a graduate): $atleast_1")
+```
+
+:::{.callout-note appearance="minimal"}
+
+In Julia, the `binomial(n, k)` function computes the binomial coefficient:
+
+$\small{\binom{n}{k} = \dfrac{n!}{k!(n - k)!}}$
+
+It gives the number of ways to choose `k` items from `n` without regard to order — also known as "`n` choose `k`".
+
+:::
+
+--------------------------------------------------------------------------------------------
+
+Q8. A bag contains 25 balls numbered 1 to 25. Considering an odd number as a 'success', and drawing two balls with replacement, find the probability of:
+
+- Two successes
+
+- Exactly one success
+
+- At least one success
+
+- No successes
+
+**Answer**
+
+Each draw is a Bernoulli trial:
+
+Success = odd number = $\small{13}$ odd numbers in $\small{1 \text{ to } 25}$, so, $\small{p = \dfrac{13}{25}}$
+
+Number of trials: $\small{n = 2}$
+
+- $\small{P(\text{Two successes}) \Rightarrow P(X = 2)}$
+
+```{julia}
+two_successes = my_pmf(2; n = 2, p = 13//25)
+
+println("P(X = 2): $two_successes")
+```
+
+- $\small{P(\text{One success}) \Rightarrow P(X = 1)}$
+
+```{julia}
+one_success = my_pmf(1; n = 2, p = 13//25)
+
+println("P(X = 1): $one_success")
+```
+
+- $\small{P(\text{t least one success}) \Rightarrow P(X \ge 1) \Rightarrow 1 - P(X \le 0)}$ 
+
+```{julia}
+atleast_1 = 1 - my_cdf(0; n = 2, p = 13//25)
+
+println("P(X = 1): $atleast_1")
+```
+
+- $\small{P(\text{No successes}) \Rightarrow P(X = 0)}$
+
+```{julia}
+no_successes = my_pmf(0; n = 2, p = 13//25)
+
+println("P(X = 0): $no_successes")
+```
+
+| Event                | Probability        |
+|----------------------|--------------------|
+| Two successes        | $\small{\dfrac{169}{625}}$ |
+| Exactly one success  | $\small{\dfrac{312}{625}}$ |
+| At least one success | $\small{\dfrac{481}{625}}$ |
+| No successes         | $\small{\dfrac{144}{625}}$ |
+
+--------------------------------------------------------------------------------------------
+
+Q9. A bag contains 5 white and 8 red balls. Two drawings of 3 balls are made:
+
+- With replacement before the second trial
+
+- Without replacement before the second trial
+
+Find the probability that the first drawing will give 3 white and the second 3 red balls in each case.
+
+**Answer**
+
+- With replacement before the second trial:
+
+1. First draw: 3 white out of 5, from 13 total balls: $\small{P(\text{3 white}) = \dfrac{\binom{5}{3}}{\binom{13}{3}} = \dfrac{10}{286} = \dfrac{5}{143}}$
+
+```{julia}
+three_white = binomial(5, 3) // binomial(13, 3)
+
+println("P(3 white): $three_white")
+```
+
+2. Second draw: 3 red out of 8, from 13 total balls: $\small{P(\text{3 red}) = \dfrac{\binom{8}{3}}{\binom{13}{3}} = \dfrac{56}{286} = \dfrac{28}{143}}$
+
+```{julia}
+three_red = binomial(8, 3) // binomial(13, 3)
+
+println("P(3 red): $three_red")
+```
+
+- Without replacement before the second trial
+
+1. First draw: 3 white out of 5, from 13 total balls: $\small{{P(\text{3 white}) = \dfrac{\binom{5}{3}}{\binom{13}{3}} = \dfrac{10}{286} = \dfrac{5}{143}}}$
+
+```{julia}
+three_white = binomial(5, 3) // binomial(13, 3)
+
+println("P(3 white): $three_white")
+```
+
+2. Second draw: 3 red out of 8, from 10 (13-3) total balls: $\small{P(\text{3 red}) = \dfrac{\binom{8}{3}}{\binom{10}{3}} = \dfrac{56}{120} = \dfrac{7}{15}}$
+
+```{julia}
+three_red = binomial(8, 3) // binomial(10, 3)
+
+println("P(3 red): $three_red")
+```
+
+| Case                | First Draw: 3 White                | Second Draw: 3 Red                |
+|---------------------|------------------------------------|-----------------------------------|
+| With Replacement    | $\small{\dfrac{10}{286} = \dfrac{5}{143}}$   | $\small{\dfrac{56}{286} = \dfrac{28}{143}}$ |
+| Without Replacement | $\small{\dfrac{10}{286} = \dfrac{5}{143}}$   | $\small{\dfrac{56}{120} = \dfrac{7}{15}}$   |
+
+--------------------------------------------------------------------------------------------
+
+Q10. Three groups of workers contain 3 men and 1 woman, 2 men and 2 women, and 1 man and 3 women respectively. One worker is selected at random from each group. What is the probability that the selected group consists of 1 man and 2 women?
+
+**Answer**
+
+Group Composition:
+
+- Group A: 3 men, 1 woman
+
+- Group B: 2 men, 2 women
+
+- Group C: 1 man, 3 women
+
+Favorable Cases (1 man, 2 women):
+
+- M = man selected from that group
+
+- W = woman selected
+
+We need exactly one M and two W, so the combinations are:
+
+| Selection Type | Group A        | Group B        | Group C        | Probability(A * B * C) |
+|----------------|--------------- |----------------|----------------|------------------------|
+| M W W          | $\small{\dfrac{3}{4}}$ | $\small{\dfrac{2}{4}}$ | $\small{\dfrac{3}{4}}$ | $\small{\dfrac{18}{64}}$       |
+| W M W          | $\small{\dfrac{1}{4}}$ | $\small{\dfrac{2}{4}}$ | $\small{\dfrac{3}{4}}$ | $\small{\dfrac{6}{64}}$        |
+| W W M          | $\small{\dfrac{1}{4}}$ | $\small{\dfrac{2}{4}}$ | $\small{\dfrac{1}{4}}$ | $\small{\dfrac{2}{64}}$        |
+
+:::{.callout-note appearance="minimal"}
+
+# Multiplication Rule for Independent Events:
+
+If events $\small{A}$ and $\small{B}$ are independent, then $\small{P(A \cap B) = P(A) \cdot P(B)}$
+
+:::
+
+Total Probability:
+
+- Add all the favorable cases: $\small{P(\text{1 man, 2 women}) = \dfrac{18 + 6 + 2}{64} = \dfrac{26}{64} = \dfrac{13}{32}}$
+
+```{julia}
+p1 = (3//4) * (2//4) * (3//4)
+p2 = (1//4) * (2//4) * (3//4)
+p3 = (1//4) * (2//4) * (1//4)
+
+total = p1 + p2 + p3
+println("P(1 man and 2 women): $total")
+```
+
+--------------------------------------------------------------------------------------------
+
+Q11. What is the probability that a randomly selected leap year will contain 53 Sundays?
+
+**Answer**
+
+- A leap year has 366 days, which is equivalent to 52 full weeks and 2 extra days.
+
+- So, since 52 Sundays are guaranteed, the probability of getting 53 Sundays depends on which two days the extra days fall on.
+
+- The two extra days in a leap year can be any of the following 7 combinations: $\small{\text{Sample space} = \{\text{Su-Mo}, \text{Mo-Tu}, \text{Tu-We}, \text{We-Th}, \text{Th-Fr}, \text{Fr-Sa}, \text{Sa-Su}\}}$
+
+- So out of 7 possible combinations, 2 contain a Sunday.
+
+- Final Probability:
+
+  $\small{P(53\ \text{Sundays}) = \dfrac{2}{7}}$
+
+```{julia}
+# Total number of possible extra day combinations in a leap year
+total_outcomes = 7
+
+# Favorable outcomes: (Saturday, Sunday) and (Sunday, Monday)
+favorable_outcomes = 2
+
+# Probability
+prob_53_sundays = favorable_outcomes // total_outcomes
+
+println("P(53 Sundays) = $prob_53_sundays")
+```
+
+--------------------------------------------------------------------------------------------
+
+Q12. A university has to select an examiner from a list of 50 persons, which includes 20 women and 30 men, 10 who know Hindi and 40 who do not, 15 teachers and 35 non-teachers. What is the probability of selecting a Hindi-knowing woman teacher?
+
+**Answer**
+
+Given:
+
+- Total people = 5
+
+- Women = 2
+
+- Hindi-knowing = 1
+
+- Teachers = 15
+
+Probability that a randomly selected person is a hindi knowing woman teacher, assuming each trait is independent since no overlap is specified: $\small{P(\text{Hindi-knowing} \cap \text{Woman} \cap \text{Teacher}) = \dfrac{10}{50} \times \dfrac{20}{50} \times \dfrac{15}{50} = \dfrac{3000}{125000} = \dfrac{3}{125}}$
+
+```{julia}
+# Total people
+total = 50
+
+# Individual probabilities
+p_hindi     = 10 // total
+p_woman     = 20 // total
+p_teacher   = 15 // total
+
+# Final probability assuming independence
+p_all_three = p_hindi * p_woman * p_teacher
+
+println("P(Hindi-knowing woman teacher) = $p_all_three")
+
+```
+
+--------------------------------------------------------------------------------------------
+
+Q13. A hospital has two departments for conducting medical tests. Department A conducts 80% of the tests, while Department B conducts 20% of the tests. In Department A, 85 out of 100 tests are accurate. In Department B, 65 out of 100 tests are accurate. What is the probability that a randomly selected accurate test came from Department A?
+
+**Answer**
+
+Using Bayes' Theorem, $\small{P(\text{Dept A} \mid \text{Accurate})}$
+
+Define Events:
+
+- $A$: Test from Department A
+
+- $B$: Test from Department B
+
+- $Acc$: Test is accurate
+
+Given Probabilities:
+
+- $\small{P(A) = \dfrac{80}{100} = 0.8}$
+
+- $\small{P(B) = \dfrac{20}{100} = 0.2}$
+
+- $\small{P(\text{Acc} \mid A) = \dfrac{85}{100} = 0.85}$
+
+- $\small{P(\text{Acc} \mid B) = \dfrac{65}{100} = 0.6}5$
+
+
+Use Bayes' Theorem: $\small{P(A \mid \text{Acc}) = \dfrac{P(\text{Acc})}{P(\text{Acc} \mid A) \cdot P(A)}}$
+
+  Where: $\small{P(\text{Acc}) = P(\text{Acc} \mid A) \cdot P(A) + P(\text{Acc} \mid B) \cdot P(B)}$
+
+Thus, 
+  
+  $\small{P(\text{Acc}) = (0.85 \cdot 0.8) + (0.65 \cdot 0.2) = 0.68 + 0.13 = 0.81}$
+
+  $\small{P(A \mid \text{Acc}) = \dfrac{0.85 \cdot 0.8}{0.81} = \dfrac{0.68}{0.81} = \dfrac{68}{81}}$
+
+
+```{julia}
+# Given data
+p_A = 80//100
+p_B = 20//100
+
+p_acc_given_A = 85//100
+p_acc_given_B = 65//100
+
+# Total probability of accuracy
+p_acc = p_acc_given_A * p_A + p_acc_given_B * p_B
+
+# Bayes' theorem: P(A | Accurate)
+p_A_given_acc = (p_acc_given_A * p_A) // p_acc
+
+println("P(Dept A | Accurate) = $p_A_given_acc")
+
+```
+
+--------------------------------------------------------------------------------------------
+
+Q14. A brother and sister apply for two positions in a healthcare research project. The probability of the brother being selected is 1/7, and the probability of the sister being selected is 1/5. What is the probability that:
+
+- Both of them will be selected
+
+- Only one of them will be selected
+
+- None of them will be selected
+
+- At least one of them will be selected
+
+**Answer**
+
+:::{.callout-note appearance="minimal"}
+
+Mutually Exclusive Events: 
+
+$\small{P(A \cup B) = P(A) + P(B)}$; $\small{{P(A \cup B) = \text{A or B (either or both occur)}}}$
+
+Multiplication Theorem for Independent Events: 
+
+$\small{P(A \cap B) = P(A) \times P(B)}$; $\small{P(A \cap B) = \text{A or B (both occur)}}$
+
+Note these formulas for the following questions.
+
+:::
+
+Given:
+
+- Probability of the brother being selected: $\small{P(B) = \dfrac{1}{7}}$
+
+- Probability of the sister being selected: $\small{P(S) = \dfrac{1}{5}}$
+
+- Probability of the brother not being selected: $\small{P(\overline{B}) = \dfrac{6}{7}}$
+
+- Probability of the sister not being selected: $\small{P(\overline{S}) = \dfrac{4}{5}}$
+
+```{julia}
+#| output: false
+# Given probabilities
+P_B = 1 // 7
+P_S = 1 // 5
+P_not_B = 6 // 7
+P_not_S = 4 // 5
+```
+
+- $\small{P(\text{Both selected}) = P(B) \times P(S) = \dfrac{1}{7} \times \dfrac{1}{5} = \dfrac{1}{35}}$
+
+```{julia}
+P_both_selected = P_B * P_S
+
+println("P(Both of them will be selected): $P_both_selected")
+```
+
+- $\small{P(\text{Only one selected}) = P(B) \times P(\overline{S}) + P(\overline{B}) \times P(S) = \dfrac{1}{7} \times \dfrac{4}{5} + \dfrac{6}{7} \times \dfrac{1}{5} = \dfrac{10}{35} = \dfrac{2}{7}}$
+
+```{julia}
+P_only_one_selected = P_B * P_not_S + P_not_B * P_S
+
+println("P(Only one of them will be selected): $P_only_one_selected")
+```
+
+- $\small{P(\text{None selected}) = P(\overline{B}) \times P(\overline{S}) = \dfrac{6}{7} \times \dfrac{4}{5} = \dfrac{24}{35}}$
+
+```{julia}
+P_none_selected = P_not_B * P_not_S
+
+println("P(None of them will be selected): $P_none_selected")
+```
+
+- $\small{P(\text{At least one selected}) = 1 - P(\text{None selected}) = 1 - \dfrac{24}{35} = \dfrac{11}{35}}$
+
+```{julia}
+P_at_least_one_selected = 1 - P_none_selected
+
+println("P(At least one of them will be selected): $P_at_least_one_selected")
+```
+
+| Event                               | Probability       |
+|-------------------------------------|-------------------|
+| Both selected                       | $\small{\dfrac{1}{35}}$   |
+| Only one selected                   | $\small{\dfrac{2}{7}}$    |
+| None selected                       | $\small{\dfrac{24}{35}}$  |
+| At least one selected               | $\small{\dfrac{11}{35}}$  |
+
+--------------------------------------------------------------------------------------------

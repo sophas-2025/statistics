@@ -1,0 +1,520 @@
+---
+title: "Practice Set - Week 2"
+execute:
+  error: false
+  echo: true
+engine: julia
+date: today
+date-format: "DD-MMM-YYYY"
+author:
+  - SOPHAS
+code-annotations: hover
+format:
+  html:
+    include-in-header:
+      text: |
+        <style>
+          .header-container {
+            width: 100%;
+          }
+          .logo {
+            display: block;
+            width: 150px;
+            margin-left: -2.5%;
+          }
+        </style>
+        <link rel = "icon" href="../logo/html-logo.jpg" sizes="32x32" />
+    include-before-body:
+      text: |
+        <div class="header-container">
+          <img src= "../logo/sophas-logo.png" width="240" height="90">
+        </div>
+    self-contained-math: true
+    anchor-sections: true
+    theme: default
+    toc: true
+    toc-depth: 4
+    toc-expand: 2
+    toc-location: left
+    toc-title: Contents
+    number-sections: true
+    code-summary: Show/Hide Code
+    code-overflow: wrap
+    code-tools:
+      caption: Download tutorial
+      source: true
+fig-format: svg
+fig-width: 8
+fig-height: 6
+self-contained: true
+---
+
+```{julia}
+using StatsBase
+```
+
+Q1. The pass result of 50 students who took a class test is given below:
+
+| Marks | No of students|
+|-------|---------------|
+| 40    | 8             |
+| 50    | 10            |
+| 60    | 9             |
+| 70    | 6             |
+| 80    | 4             |
+| 90    | 3             |
+
+If the mean marks for all the students were 51.6, find out the mean marks of the students who failed.
+
+**Answer**
+
+```{julia}
+# Given data
+marks = [40, 50, 60, 70, 80, 90]
+students = [8, 10, 9, 6, 4, 3]
+total_students = 50 # Total number of students
+total_mean = 51.6 # Mean marks for all students
+
+# Total marks of all students
+marks_total = total_mean * total_students
+
+# Total marks of passed students
+marks_passed = sum(marks .* students)
+
+# Total marks of failed students
+marks_failed = marks_total - marks_passed
+
+# Mean marks of students who failed
+passed_students = sum(students) # Number of passed students
+failed_students = total_students - passed_students # Number of failed students
+
+mean_failed = marks_failed / failed_students
+
+println("The mean marks of the students who failed is $mean_failed.")
+```
+
+-------------------------------------------------------------------------------------------
+
+Q2. The average dividend declared by a group of 10 pharma companies was 18 per cent. Later on, it was discovered that one correct figure, 12, was misread as 22. Find the correct average dividend.
+
+**Answer**
+
+```{julia}
+# Given data
+incorrect_avg = 18
+n_companies = 10
+
+# Incorrect and correct figure
+incorrect_fig = 22
+correct_fig = 12
+
+# Calculate incorrect total dividend
+incorrect_total = incorrect_avg * n_companies
+
+# Adjust total for the corrected figures
+correct_total = incorrect_total - incorrect_fig + correct_fig
+
+# Calculate corrected average dividend
+correct_avg = correct_total / n_companies
+
+println("The correct average dividend is $correct_avg %.")
+```
+
+-------------------------------------------------------------------------------------------------
+
+Q3. The mean of 200 observations was 50. Later on, it was found that two observations were misread as 92 and 8 instead of 192 and 88. Find the correct mean.
+
+**Answer**
+
+```{julia}
+# Given data
+incorrect_mean = 50
+n = 200
+
+# Incorrect and correct observations
+incorrect_obs = [92, 8]
+correct_obs = [192, 88]
+
+# Calculate incorrect total sum
+incorrect_total = incorrect_mean * n
+
+# Adjust total for the corrected observations
+correct_total = incorrect_total - sum(incorrect_obs) + sum(correct_obs)
+
+# Calculate corrected mean
+correct_mean = correct_total / n
+
+println("The corrected total mean is $correct_mean.")
+```
+
+------------------------------------------------------------------------------------------------
+
+Q4. Let $x_1$ and $x_2$ be arithmetic means of two sets of data of the same nature of size n~1~ and n~2~ respectively. Show that their combined A.M. can be calculated as 
+
+**Answer**
+
+$$
+\frac{(n_1 \times x_1) + (n_2 \times x_2)}{(n_1 + n_2)}
+$$
+
+1. Defintion of arithmetic mean:
+
+$$
+x = \frac{\text{sum of data points}}{\text{number of data points}}
+$$
+
+2. Define the sums for each data set:
+
+$$
+\text{Sum of data points in set 1} = n_1 \times x_1
+$$
+
+$$
+\text{Sum of data points in set 2} = n_2 \times x_2
+$$
+
+3. Calculate the combined sum and total number of data points:
+
+$$
+\text{Total sum of data points} = (n_1 \times x_1) + (n_2 \times x_2)
+$$
+
+$$
+\text{Total number of data points} = n_1 + n_2
+$$
+
+4. Apply the definition of arithmetic mean to the combined data:
+
+$$
+x = \frac{\text{Total sum of data points}}{\text{Total number of data points}}
+$$
+
+$$
+x = \frac{(n_1 \times x_1) + (n_2 \times x_2)}{(n_1 + n_2)}
+$$
+
+---------------------------------------------------------------------------------------------------------------
+
+Q5. Average marks section A of class 9 is 70 and average marks of section B of class 9 is 80. Find the average marks of class 9, assuming:
+
+- Both sections have equal students
+
+- There are 55 students in section A and there 45 students in section B
+
+**Answer**
+
+- Both sections have equal students:
+
+  - When the number of students in both sections is equal, the overall average becomes the simple average of the two section averages.
+
+  - For section A, the sum of marks is $70 \times n = 70n$, and for section B, it is $80 \times n = 80n$
+
+  - The total sum of marks for both sections is:
+
+    $$
+    70n + 80n = 150n
+    $$
+
+  - The total number of students is:
+    $$
+    n + n = 2n
+    $$
+
+  - Therefore, the overall average is:
+    $$
+    \frac{150n}{2n} = \frac{150}{2}
+    $$
+
+```{julia}
+# Given data
+a_avg = 70
+b_avg = 80
+
+# Calculate total average
+total_avg1 = (a_avg + b_avg) / 2
+
+println("The average marks of class 9, assuming both sections have equal students is $total_avg1.")
+```
+
+------------------------------------------------------------------------
+
+- Section A has 55 students and Section B has 45 students:
+
+  - When the number of students differs, the weighted average formula is used (from Q4).
+
+```{julia}
+# Given data
+a_students = 55 #n1
+a_avg = 70 #x1
+b_students = 45 #n2
+b_avg = 80 #x2
+
+# Calculate total average: ((n1 * x1) + (n2 * x2)) / (n1 + n2)
+total_avg2 = ((a_students * a_avg ) + (b_students * b_avg)) / (a_students + b_students)
+
+println("The average marks of class 9, with 55 and 45 students in Sections A and B, is $total_avg2.")
+```
+
+----------------------------------------------------------------------------------------------------------
+
+Q6. $x_1$, $x_2$, $…$, $x_n$ are $n$ values. We are to calculate sum of squared deviation around a number $a$ as follows:
+
+**Answer**
+
+$$
+SSD = (x_1 - a)^2 + (x_2 - a)^2 + … + (x_n - a)^2
+$$
+
+Show that $SSD$ is minimum when *a* is the mean of the given values.
+
+1. Expression for SSD:
+$$
+\text{SSD} = \sum_{i=1}^{n} (x_i - a)^2
+$$
+
+2. Expand squared terms:
+$$
+\text{SSD} = \sum_{i=1}^{n} (x_i^2 -2ax_i + a^2)
+$$
+
+3.  Separate the summation:
+$$
+\frac{d(\text{SSD})}{da} = \sum_{i=1}^{n} x_i^2  -2a \sum_{i=1}^{n} x_i + na^2
+$$
+
+4. Minimize with respect to $a$:
+
+$$
+\frac{d(\text{SSD})}{da} = -2 \sum_{i=1}^{n} x_i + 2na
+$$
+
+- Set the derivative to zero:
+
+$$
+-2 \sum_{i=1}^{n} x_i + 2na = 0
+$$
+
+5. Solve for $a$:
+
+$$
+2na = 2 \sum_{i=1}^{n} x_i
+$$
+
+$$
+a = \frac{\sum_{i=1}^{n} x_i}{n}
+$$
+
+The SSD is minimized when $a$ is the mean of the values:
+
+$$
+a =  \bar x = \frac{\sum_{i=1}^{n} x_i}{n}
+$$
+
+This makes sense intuitively because the mean is the value that balances the deviations on both sides, minimizing the squared differences.
+
+For example, consider a data `(1, 2, 3, 4, 5)`, calculate SSD for $a$ = mean and another $a$, say $a$ = 1
+
+```{julia}
+# Create a function for SSD
+ssd(vec::Vector{<:Number}, val::Number) = sum((vec .- val).^2)
+
+# Given data
+data = [1, 2, 3, 4, 5]
+
+# Calculate mean
+mean_data = mean(data)
+
+# Calculate SSD for a = mean
+ssd1 = ssd(data, mean_data)
+
+println("ssd(data, mean_data) = $ssd1")
+
+# Calculate SSD for a = 1
+ssd2 = ssd(data, 1)
+
+println("ssd(data, 1) = $ssd2")
+```
+
+:::{.callout-note appearance="minimal"}
+To compute `SSD`, we create a function in [assignment form](https://docs.julialang.org/en/v1/manual/functions/#man-functions). 
+We assign the variable types in the function definition and equate it to the operation that calculates `SSD`.
+
+Functions can be created without specifying types, but defining them is preferred. 
+
+`Number` type takes `Integer`s and `Float`s while `Vector{<:Number}` type takes a `Vector` of `Number`.
+:::
+
+---------------------------------------------------------------------------------------------------------------
+
+Q7. Median is not affective by extreme values. Give examples in support of your answer.
+
+**Answer**
+
+The median represents the middle value of a dataset when it is arranged in ascending or descending order. Since it is based on the position of the middle value(s) rather than the actual numerical values, it is not significantly affected by extreme values (outliers). 
+
+```{julia}
+# Example 
+a = [10, 12, 14, 16, 18] # Dataset a
+median_a = median(a)
+
+b = [10, 12, 14, 16, 100] # Dataset b with an extreme value
+median_b = median(b)
+
+print("Median of dataset a and b are $median_a and $median_b respectively.")
+```
+
+The extreme value (`100`) does not change the median, showing its resistance to outliers.
+
+---------------------------------------------------------------------------------------------------------------
+
+Q8. Somnath does data analysis for a company. The data on tea consumption (in grams) for the company are as follows:
+
+**Answer**
+
+14.77 16.11 16.11 15.05 15.99 14.91 15.27 16.01 15.75 14.89 16.05 15.22 16.02 15.24 16.11 15.02
+
+- Calculate the mean and median tea consumption.
+
+- Which of the mean and median measures is best to use? Explain
+
+```{julia}
+# Given data
+data = [14.77 16.11 16.11 15.05 15.99 14.91 15.27 16.01 15.75 14.89 16.05 15.22 16.02 15.24 16.11 15.02]
+
+# Calculate mean and median
+mean_data = mean(data)
+median_data = median(data)
+
+print("The mean and median for the data on tea consumption are $(mean_data)g and $(median_data)g respectively.")
+```
+
+The mean (`15.53 grams`) and median (`15.51 grams`) are very close, indicating a symmetrical distribution with minimal skewness, so both measures are suitable; however, the mean may be preferred for further statistical analysis as it incorporates all data values since there are no extreme values in this dataset.
+
+------------------------------------------------------------------------------------------------------
+
+Q9. Following are the responses from 55 employees to the question about how much time they travel to reach the office (in mins).
+
+055 060 080 080 080 085 085 085 090 090 090
+
+090 092 094 095 095 095 095 100 100 100 100
+
+100 100 105 105 105 105 109 110 110 110 110
+
+112 115 115 115 115 115 120 120 120 120 120
+
+124 125 125 125 130 130 140 140 140 145 150
+
+Calculate the range and interquartile range and interpret your result.
+
+**Answer**
+
+```{julia}
+# Given data
+travel_time = vec([055 060 080 080 080 085 085 085 090 090 090
+
+090 092 094 095 095 095 095 100 100 100 100
+
+100 100 105 105 105 105 109 110 110 110 110
+
+112 115 115 115 115 115 120 120 120 120 120
+
+124 125 125 125 130 130 140 140 140 145 150])
+
+# Calculate range 
+range_travel_time = maximum(travel_time) - minimum(travel_time)
+
+#Calculate Q1, Q3, and IQR
+q1_travel_time = quantile(travel_time, 0.25)
+q2_travel_time = quantile(travel_time, 0.75)
+iqr_travel_time = iqr(travel_time)
+
+println("The range is: $range_travel_time mins.")
+println("The first quartile is: $q1_travel_time mins.")
+println("The third quartile is: $q2_travel_time mins.")
+println("The IQR is: $iqr_travel_time mins.")
+```
+
+The range of `95 minutes` indicates the spread between the shortest and longest travel times among employees.
+
+The interquartile range (IQR) of `25.5 minutes` indicates that the middle `50%` of employees take between `94.5` and `120` minutes to reach the office. This suggests that most employees' travel times are fairly concentrated within this range, reducing the effect of extreme values (outliers).
+
+:::{.callout-note appearance="minimal"}
+The `quantile()` function is designed for vectors, but if working with matrices, you can convert them to a vector using `vec()`.
+:::
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Q10. An agriculture farm sells grab bags of flower bulbs. The bags are sold by weight; thus the number of bulbs in each bag can vary depending on the varieties included.
+
+Below are the number of bulbs in each of the 20 bags sampled:
+
+21 33 37 56 47 25 33 32 47 34
+
+36 23 26 33 37 26 37 37 43 45
+
+- What are the mean and median number of bulbs per bag?
+
+- Based on your answer, what can you conclude about the shape of the distribution of number of bulbs per bag?
+
+**Answer**
+
+```{julia}
+# Given data
+bulbs = [21 33 37 56 47 25 33 32 47 34 36 23 26 33 37 26 37 37 43 45]
+
+# Calculate mean and median
+mean_bulbs = mean(bulbs)
+median_bulbs = median(bulbs)
+
+println("The mean and median of the number of bulbs per bag are $mean_bulbs and $median_bulbs respectively.")
+```
+
+The mean and median are very close, suggesting an approximately symmetrical distribution with no strong skewness, and although a few larger values exist (e.g., `56`), their effect on the mean is minimal, indicating a near-normal distribution
+
+-----------------------------------------------------------------------------------------------------------------
+
+Q11. The wholesale prices of a commodity for a week are as follows:
+
+Days: 1 2 3 4 5 6 7
+
+Commodity `price/kg`: 240 260 270 245 255 286 264
+
+Calculate the variance and standard deviation.
+
+**Answer**
+
+```{julia}
+# Given data
+com_price = [240 260 270 245 255 286 264] # commodity in Rs/kg 
+
+# Calculate variance and standard deviation
+var_com_price = var(com_price)
+std_com_price = std(com_price)
+
+println("The variance is: $(round(var_com_price, digits = 2)) Rs²/kg².")
+println("The standard deviation is $(round(std_com_price, digits = 2)) Rs/kg.")
+```
+
+------------------------------------------------------
+
+Q12. (Continue from Q11) Suppose for next week, `price/kg` is just 10 more than previous week.
+
+Calculate the variance and standard deviation. What is your conclusion?
+
+**Answer**
+
+```{julia}
+# Given data 
+com_price = [240 260 270 245 255 286 264] .+ 10 # Previous week's price + Rs 10.
+
+# Calculate variance and standard deviation
+var_com_price = var(com_price)
+std_com_price = std(com_price)
+
+println("The variance is: $(round(var_com_price, digits = 2)) Rs²/kg².")
+println("The standard deviation is $(round(std_com_price, digits = 2)) Rs/kg.")
+```
+
+The variance and standard deviation remain unchanged when all prices increase by `Rs/kg 10` because they measure the spread of data, not its absolute position, meaning a constant change affects the mean but not the spread.
+
+--------------------------------------------------------------------------------------

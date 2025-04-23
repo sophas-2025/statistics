@@ -1,0 +1,187 @@
+---
+title: "Practice Set - Week 2"
+execute:
+  error: false
+  echo: true
+engine: julia
+date: today
+date-format: "DD-MMM-YYYY"
+author:
+  - SOPHAS
+code-annotations: hover
+format:
+  html:
+    include-in-header:
+      text: |
+        <style>
+          .header-container {
+            width: 100%;
+          }
+          .logo {
+            display: block;
+            width: 150px;
+            margin-left: -2.5%;
+          }
+        </style>
+        <link rel = "icon" href="../logo/html-logo.jpg" sizes="32x32" />
+    include-before-body:
+      text: |
+        <div class="header-container">
+          <img src= "../logo/sophas-logo.png" width="240" height="90">
+        </div>
+    self-contained-math: true
+    anchor-sections: true
+    theme: default
+    toc: true
+    toc-depth: 4
+    toc-expand: 2
+    toc-location: left
+    toc-title: Contents
+    number-sections: true
+    code-summary: Show/Hide Code
+    code-overflow: wrap
+    code-tools:
+      caption: Download tutorial
+      source: true
+fig-format: svg
+fig-width: 8
+fig-height: 6
+self-contained: true
+---
+
+Q1. The pass result of 50 students who took a class test is given below:
+
+| Marks | No of students|
+|-------|---------------|
+| 40    | 8             |
+| 50    | 10            |
+| 60    | 9             |
+| 70    | 6             |
+| 80    | 4             |
+| 90    | 3             |
+
+If the mean marks for all the students were 51.6, find out the mean marks of the students who failed.
+
+```{julia}
+# Answer
+```
+
+-------------------------------------------------------------------------------------------
+
+Q2. The average dividend declared by a group of 10 pharma companies was 18 per cent. Later on, it was discovered that one correct figure, 12, was misread as 22. Find the correct average dividend.
+
+```{julia}
+# Answer
+```
+
+---------------------------------------------------------------------------------------------------------------
+
+Q5. Average marks section A of class 9 is 70 and average marks of section B of class 9 is 80. Find the average marks of class 9, assuming:
+
+- Both sections have equal students
+
+- There are 55 students in section A and there 45 students in section B
+
+```{julia}
+# Answer
+```
+
+----------------------------------------------------------------------------------------------------------
+
+Q6. $x_1$, $x_2$, $…$, $x_n$ are $n$ values. We are to calculate sum of squared deviation around a number $a$ as follows:
+
+$$
+SSD = (x_1 - a)^2 + (x_2 - a)^2 + … + (x_n - a)^2
+$$
+
+Show that $SSD$ is minimum when *a* is the mean of the given values.
+
+```{julia}
+# Answer
+```
+
+---------------------------------------------------------------------------------------------------------------
+
+Q7. Median is not affective by extreme values. Give examples in support of your answer.
+
+```{julia}
+# Answer
+```
+
+---------------------------------------------------------------------------------------------------------------
+
+Q8. Somnath does data analysis for a company. The data on tea consumption (in grams) for the company are as follows:
+
+14.77 16.11 16.11 15.05 15.99 14.91 15.27 16.01 15.75 14.89 16.05 15.22 16.02 15.24 16.11 15.02
+
+- Calculate the mean and median tea consumption.
+
+- Which of the mean and median measures is best to use? Explain
+
+```{julia}
+# Answer
+```
+
+------------------------------------------------------------------------------------------------------
+
+Q9. Following are the responses from 55 employees to the question about how much time they travel to reach the office (in mins).
+
+055 060 080 080 080 085 085 085 090 090 090
+
+090 092 094 095 095 095 095 100 100 100 100
+
+100 100 105 105 105 105 109 110 110 110 110
+
+112 115 115 115 115 115 120 120 120 120 120
+
+124 125 125 125 130 130 140 140 140 145 150
+
+Calculate the range and interquartile range and interpret your result.
+
+```{julia}
+# Answer
+```
+
+----------------------------------------------------------------------------------------------------------
+
+Q10. An agriculture farm sells grab bags of flower bulbs. The bags are sold by weight; thus the number of bulbs in each bag can vary depending on the varieties included.
+
+Below are the number of bulbs in each of the 20 bags sampled:
+
+21 33 37 56 47 25 33 32 47 34
+
+36 23 26 33 37 26 37 37 43 45
+
+- What are the mean and median number of bulbs per bag?
+
+- Based on your answer, what can you conclude about the shape of the distribution of number of bulbs per bag?
+
+```{julia}
+# Answer
+```
+
+----------------------------------------------------------------------------------------------------------
+
+Q11. The wholesale prices of a commodity for a week are as follows:
+
+Days: 1 2 3 4 5 6 7
+
+Commodity `price/kg`: 240 260 270 245 255 286 264
+
+Calculate the variance and standard deviation.
+
+```{julia}
+# Answer
+```
+
+------------------------------------------------------
+
+Q12. (Continue from Q11) Suppose for next week, `price/kg` is just 10 more than previous week.
+
+Calculate the variance and standard deviation. What is your conclusion?
+
+```{julia}
+# Answer
+```
+
+--------------------------------------------------------------------------------------
