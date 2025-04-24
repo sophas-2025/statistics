@@ -11,8 +11,6 @@ author:
 code-annotations: hover
 format:
   html:
-    mermaid:
-      theme: neutral
     include-in-header:
       text: |
         <style>
@@ -33,11 +31,9 @@ format:
         </div>
     self-contained-math: true
     anchor-sections: true
-    theme: default
     toc: true
     toc-depth: 4
     toc-expand: 2
-    toc-location: left
     toc-title: Contents
     number-sections: true
     code-summary: Show/Hide Code

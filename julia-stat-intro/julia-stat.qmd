@@ -1,0 +1,588 @@
+---
+title: "Introduction of Julia in Statistics"
+execute:
+  error: false
+  echo: true
+julia:
+    execflags: ["--project=."]
+date: today
+date-format: "DD-MMM-YYYY"
+author:
+  - SOPHAS
+code-annotations: hover
+format:
+  html:
+    include-in-header:
+      text: |
+        <style>
+          .header-container {
+            width: 100%;
+          }
+          .logo {
+            display: block;
+            width: 150px;
+            margin-left: -2.5%;
+          }
+        </style>
+        <link rel = "icon" href="../logo/html-logo.jpg" sizes="32x32" />
+    include-before-body:
+      text: |
+        <div class="header-container">
+          <img src= "../logo/sophas-logo.png" width="240" height="90">
+        </div>
+    self-contained-math: true
+    anchor-sections: true
+    toc: true
+    toc-depth: 4
+    toc-expand: 2
+    toc-title: Contents
+    number-sections: true
+    code-summary: Show/Hide Code
+    code-overflow: wrap
+    code-tools:
+      caption: Download tutorial
+      source: false
+fig-format: svg
+fig-width: 8
+fig-height: 6
+self-contained: true
+---
+
+# Statistics 📊
+
+## What is statistics?
+
+Statistics deals with the **collection**, **presentation**, **analysis**, and **interpretation** of data.
+
+------------------------------------------------------------------------------------------------------------
+
+## Data types
+
+1. **Quantitative: How much**
+
+- Continuous (Measured): Age, height, weight
+
+- Discrete (Counted): No of stitches required for surgery, no of medications prescribed
+
+2. **Qualitative/Categorical: What type**
+
+- Ordinal (ordered): Pain score 0 to 10, breast cancer grades
+
+- Nominal (unordered): Blood group, Gender
+
+  - Dichotomous/binary: Gender, Patient Status (Alive/dead)
+
+---------------------------------------------------------------------------------------------------------
+
+## Data Conversion & Interchangeability
+
+Is data interchangeability possible?
+
+Yes, data can be converted between types depending on the context and analysis needs.
+
+1. **Continuous → Nominal**
+
+- Example: Blood Pressure (BP) measured as a continuous variable can be categorized as Hypertensive or Normal based on cutoff points.
+
+2. **Continuous → Ordinal**
+
+- Example: Weight can be classified into Underweight, Normal, Overweight, Obese, making it ordinal.
+
+3. **Categorical → Continuous** (Scoring or Dummy Coding)
+
+-   Example: [Likert scale](https://en.wikipedia.org/wiki/Likert_scale) responses (*Strongly Disagree* to *Strongly Agree*) 
+are assigned numerical scores (1 to 5).
+
+::: {.callout-note appearance="minimal"}
+
+Numerical scores from a Likert scale (e.g., 1 to 5) represent ordinal data, 
+not truly continuous data. However, in some analyses (e.g., regression, factor analysis, ML models), 
+they are treated as continuous for practical purposes.
+
+:::
+
+Efficient data conversion enhances statistical modeling and interpretation.
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+## Descriptive vs. Inferential Statistics
+
+Both approaches are essential in applied statistics for meaningful data interpretation and decision-making.
+
+### Descriptive
+
+Summarizes and presents data without making generalizations. It includes:
+
+- **Measures of Central Tendency**: Mean, Median, Mode
+
+- **Measures of Dispersion**: Range, Variance, Standard Deviation
+
+- **Frequency & Visualization**: Tables, Histograms, Box Plots, Bar Charts
+
+### Inferential
+
+Draws conclusions about a population based on a sample. It includes:
+
+- **Hypothesis Testing**: Assessing statistical significance
+
+- **Regression Analysis**: Predicting relationships between variables
+
+- **Confidence Intervals**: Estimating population parameters with uncertainty measures
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+# Julia ![](images/1-jl-logo.png){width="20"}
+
+## Why Use Julia for Statistics?
+
+Julia is a free programming language designed for mathematical computing, easy to learn, fast, and high-performance. 
+It's rapidly becoming a key language for data science and machine learning.
+
+In statistics, for example, manually calculating the mean, median, variance, 
+and performing other statistical analyses can be tedious and time-consuming, even with a calculator. 
+This is where learning Julia becomes valuable. With its efficient **syntax** and **powerful libraries** 
+like `Statistics.jl` and `StatsBase.jl`, Julia streamlines complex calculations, 
+enhancing data analysis speed and accuracy. While `Statistics.jl` offers basic statistical functions, 
+`StatsBase.jl` provides more advanced tools for modeling and statistical tests.
+
+------------------------------------------------------------------------------------------------------------------
+
+## REPL
+
+The [REPL](https://docs.julialang.org/en/v1/stdlib/REPL/) **(Read-Eval-Print Loop)** is a built-in, full-featured interactive command-line interface available in the Julia executable. Julia starts the REPL by default when launched, or it can be accessed by simply running `julia` in the **command prompt** without any arguments.
+
+It has a searchable history, tab-completion, many helpful keybindings, and dedicated help and shell modes.
+
+To exit the interactive session, type `ctrl + D` on a blank line or type `exit()` followed by the `return` or `enter` key. The REPL greets you with a banner and a `julia>` prompt.
+
+![](images/2-jl-repl.png){.lightbox}
+
+1. **Prompt modes**:
+
+| Mode ^[To switch between different modes in the Julia REPL, you must first return to the default Julia mode using `Backspace` or `ctrl + C`.]          | Symbol      | Usage                                                                              |
+|----------------|-------------|------------------------------------------------------------------------------------|
+|Julia Mode | `No symbol` | The default mode for running Julia commands and code                               | 
+| Help mode     | `?`         | Accesses documentation and provides information about functions, modules, and more ![](images/3-jl-help.png){.lightbox} |
+| Shell mode     | `;`         | Runs system-level shell commands (e.g., Linux or Windows commands) ![](images/4-jl-shell.png){.lightbox}                | 
+| Pkg mode       | `]`         | Manages Julia packages using the built-in package manager (Pkg) ![](images/5-jl-pkg.png){.lightbox}                  |
+
+: {.striped .hover} 
+
+2. **Key bindings**:
+
+The Julia REPL makes great use of key bindings. Few examples:
+
+| **Key Binding**       | **Description**                            |
+|-----------------------|--------------------------------------------|
+| `ctrl + C`            | Interrupts or cancel the current operation |
+| `ctrl + L`            | Clears the console screen                  |
+| `ctrl + D`            | Exits the Julia REPL                       |
+
+: {.striped .hover} 
+
+---------------------------------------------------------------------------------------------------
+
+## Variables
+
+In Julia, a **variable** is a name that is assigned to a **value**.
+
+It is like a labelled container where you can **store** information. You can easily **check** what's inside or **replace** it with something else whenever needed.
+
+- *Imagine we're running a clinical trial for a fever medication called Feverol, and we need to track the number of patients involved:*
+
+1. **Create a container**: *We introduce a variable named patients to track the number of individuals in the trial.*
+
+2. **Add initial data**: *We start by enrolling 10 patients.*
+
+```{julia}
+patients = 10 # 10 is the value assigned to the variable patients.
+```
+
+3. **Refer to the data**: *A researcher asks for the current patient count.*
+
+```{julia}
+print("The current patient count is ", patients, ".") # print() displays the message, inserting the variable's value between the String output.
+```
+
+
+4. **Update the count**: *As more patients join, we increase the total by 5.*
+
+```{julia}
+patients = patients + 5
+```
+
+```{julia}
+print("The updated patient count is $patients.") # To insert a variable's value inside a String, $(String interpolation) is used.
+```
+
+::: {.callout-note appearance="minimal"}
+
+`=`: The assignment operator, used to store a value in a variable.
+
+`println()`: A function that prints the contents followed by a new line.
+
+`print()`: Works similar to `println()`, but without adding a new line. 
+
+`patients = patients + 5`: Updates the value of patients by adding 5 and stores it back in the variable.
+
+`#`: Denotes comments in the code.
+
+:::
+
+::: callout-important
+
+## Variable naming
+
+A variable name can contain letters, numbers, and underscores, with lowercase recommended. It must start with a letter or an underscore, not a number. No spaces are allowed, and variable names cannot be reserved keywords (e.g., `using`, `break`, `begin`, `end`, `else`).
+
+:::
+
+--------------------------------------------------------------------------------------------------------------
+
+## Data Types
+
+Data types **define** the type of value a variable can hold.
+
+They serve specific purposes: **Integers** for counting, **Floats** for precision, **Strings** for text, and **Boolean** for logical operations.
+
+- *After successfully conducting the trial, our drug has been approved—Hooray!*
+
+- *In a clinical setting, a patient presenting with a fever is now prescribed Feverol.*
+
+- *Let's define and check the data types of the medication details in Julia:*
+
+```{julia}
+fever = true # can also be 1
+print("The presence of fever is recorded as ", fever, ".")
+```
+
+::: {.callout-note appearance="minimal"}
+`Boolean`: Booleans are a data type with only two possible values: `true (1)` or `false (0)`.
+:::
+
+```{julia}
+drug = "Feverol"
+print("Drug prescribed is ", drug, ".")
+```
+
+::: {.callout-note appearance="minimal"}
+
+`String`: Strings are like words or sentences. They are always enclosed in quotes.
+
+:::
+
+```{julia}
+dose = 500.0
+print("The dose is $dose mg.")
+```
+
+::: {.callout-note appearance="minimal"}
+
+`Float64`: Floats are numbers with decimal points.
+
+:::
+
+```{julia}
+frequency = 4
+print("The patient can take $drug up to $frequency times a day (Q6H).")
+```
+
+::: {.callout-note appearance="minimal"}
+
+`Int64`: Integers are numbers without a decimal point.
+
+:::
+
+::: panel-tabset
+
+## fever
+
+```{julia}
+typeof(fever)
+```
+
+## drug
+
+```{julia}
+typeof(drug)
+```
+
+## dose
+
+```{julia}
+typeof(dose)
+```
+
+## frequency
+
+```{julia}
+typeof(frequency)
+```
+:::
+
+::: {.callout-note appearance="minimal"}
+
+Use `typeof(variable_name)` to find a variable's type.
+
+The `64` in `Int64` and `Float64` indicates the number of bits used for storage.
+:::
+
+---------------------------------------------------------------------------------------
+
+## Basic Mathematical Operations
+Julia offers a full range of arithmetic, bitwise operators, and efficient, portable implementations of standard [mathematical functions](https://docs.julialang.org/en/v1/manual/mathematical-operations/) for all numeric types.
+
+- *What is the maximum dose of Feverol this patient can take in a day?*
+
+```{julia}
+max_dose = dose * frequency
+print("The suggested maximum dose per day for this patient is $max_dose mg.")
+```
+
+::: {.callout-note appearance="minimal"}
+`+`, `-`, `/`, `*` are called operators and order of operations is **PEMDAS**
+
+```{julia}
+(1 + 2)^3 * 4 + 5 # 3^3 * 4 + 5 => 27 * 4 + 5 => 108 + 5
+```
+:::
+
+----------------------------------------------------------------------------------------------------
+
+## Arrays
+
+Arrays consists of various types, such as **Vectors** and **Matrices**.
+
+-----------------------------------------------------------------------------------------
+
+### Vectors
+
+A uni-dimensional array in Julia that stores elements.
+Values of the vectors are separated by commas.
+It can hold elements of the same type or different types, including other vectors.
+When storing mixed types, the vector's type is set to `Vector{Any}`.
+
+- *Here is the concentration data (ug/mL) from our Feverol trial conducted with 15 patients.*
+
+```{julia}
+conc = [11.490142, 9.585207, 11.943066, 14.569090, 9.297540, 9.297589, 14.737638, 12.302304, 8.591577, 11.627680, 8.609747, 8.602811, 10.725887, 4.260159, 4.825247]
+```
+
+```{julia}
+typeof(conc)
+```
+
+::: {.callout-note appearance="minimal"}
+`conc` is a vector with elements of type `Float64`.
+:::
+
+-------------------------------------------------------------------------------------------------------
+
+### Matrices
+
+A two-dimensional array in Julia is primarily used for numeric computations.
+**Spaces** separate columns and **semicolons (`;`)** separate rows.
+It can store elements of the same type or different types (excluding vectors, but including matrices).
+When storing mixed types, its type becomes `Matrix{Any} `.
+
+- *The same concentration data from above can be written as a matrix with 1 row and 15 columns.*
+
+```{julia}
+conc_mat = [11.490142 9.585207 11.943066 14.569090 9.297540 9.297589 14.737638 12.302304 8.591577 11.627680 8.609747 8.602811 10.725887 4.260159 4.825247]
+```
+
+```{julia}
+typeof(conc_mat)
+```
+
+::: {.callout-note appearance="minimal"}
+`conc_mat` is an matrix with elements of type `Float64`.
+:::
+
+::: {.callout-tip appearance="minimal"}
+More details on matrices are covered in the **Matrix Operations** section.
+:::
+
+----------------------------------------------------------------------------------------
+
+## Functions
+
+Functions are blocks of code designed to perform a specific task using input variables. They help in re-usability, allowing the same logic to be used multiple times without rewriting the code. A function consists of two main parts: **input** (arguments) and **output** (result).
+
+Think of a function as a process where you provide **input**, apply some **customized processing**, and obtain the desired **output**.
+
+- *For example, to find the mean concentration of **Feverol** from our clinical trial, the **input** is the recorded concentration data, the **processing** step calculates the mean, and the **output** is the final mean concentration.*
+
+1. **Defining the function**
+
+```{julia}
+function mean_concentration(x)
+    return sum(x) / length(x)  # Processing step
+end
+```
+
+2.  **Using the function**
+
+```{julia}
+mean_feverol = mean_concentration(conc)
+```
+
+```{julia}
+print("The mean concentration of feverol is $mean_feverol.")
+```
+
+---------------------------------------------------------------------------------------
+
+## Packages
+
+Julia provides **built-in functions** for common operations, and many **packages** offer specialized functions for specific tasks. We can choose the most suitable function from Julia's standard library or external packages, saving time and effort.
+
+Examples:
+
+-  `Pumas.jl` – Pharmaceutical modeling and simulation
+
+-  `StatsBase.jl` – Statistical analytics
+
+-  `DataFramesMeta.jl` – Dataset manipulation
+
+For instance, to compute the mean, we can use the built-in `mean` function from the `Statistics.jl` or `StatsBase.jl` package instead of writing our own:
+
+-----------------------------------------------------------------------------------------------------------
+
+### Installing a Package
+
+There are two ways of installing a package in Julia:
+
+::: {.callout-important appearance="minimal"}
+Installing a package requires an internet connection.
+:::
+
+----------------------------------------------------------------------------------------------------
+
+#### Method 1
+
+1. Open the Julia REPL
+
+![](images/2-jl-repl.png){.lightbox}
+
+2. Press: `]` to enter <span style="color:blue;">package mode</span>
+
+![](images/5-jl-pkg.png){.lightbox}
+
+3. Type: `add StatsBase` and press: `enter`, your package will get installed
+
+![](images/6-jl-pk-sb.png){.lightbox}
+
+::: {.callout-note appearance="minimal"}
+Julia packages use **PascalCase** (also known as **TitleCase**), where each word starts with a capital letter and no separators are used.
+
+Format: `MyPackageName.jl`
+:::
+
+4. Press: `backspace` to return to <span style="color:green;">julia mode</span>
+
+5. Type: `using StatsBase` and press: `enter` to load the package.
+
+![](images/7-jl-sb.png){.lightbox}
+
+::: {.callout-note appearance="minimal"}
+Once installed, a package stays in the global environment; use: `using PackageName` to load it anytime.
+:::
+
+6. To check the status of installed packages, type: `st` in <span style="color:blue;">package mode</span> and press: `enter`
+
+![](images/8-jl-pk-stat.png){.lightbox}
+
+-------------------------------------------------------------------------------------------------------------
+
+#### Method 2
+
+1. Open the Julia REPL
+
+2. Type: `using Pkg` and press: `enter`
+
+3. Type: `Pkg.add("StatsBase")` and press: `enter`, your package will get installed
+
+![](images/9-jl-pk-2.png){.lightbox}
+
+4.  Type: `using StatsBase` and press: `enter` to load the package.
+
+::: {.callout-important appearance="minimal"}
+The `Pumas` package requires a separate installation process.
+:::
+
+```{julia}
+using StatsBase
+```
+
+- *Calculate the measures of central tendency and dispersion for the concentration data (ug/mL) from our Feverol trial.*
+
+```{julia}
+mean_conc = mean(conc)
+```
+
+```{julia}
+med_conc = median(conc)
+```
+
+```{julia}
+var_conc = var(conc)
+```
+
+```{julia}
+std_conc = std(conc)
+```
+
+::: {.callout-note appearance="minimal"}
+### Summary:
+
+-   The concentrations vary around a mean of `10.03 µg/mL`, with a median of `9.59 µg/mL`.
+
+-   The data is somewhat spread out with a standard deviation of `2.98` and a variance of `8.90`.
+
+-   The values suggest a moderate spread in the data, with most concentrations falling near the average but some being notably higher or lower.
+:::
+
+::: {.callout-important appearance="minimal"}
+There will be instances where built-in functions don’t fully meet our needs. In such cases, we can define **custom functions** tailored to specific requirements.
+:::
+
+---------------------------------------------------------------------------------------------------
+
+## Matrix operations
+
+Now, if there is a **time-point**, **dose**, or **response** column included in the data, a **matrix** becomes extremely helpful in **statistical computations**.
+
+This structure allows efficient manipulation, comparison, and aggregation of data across rows (e.g., patients) and columns (e.g., time points or doses).
+
+Functions like `mean()`, `sum()`, and `maximum()` can operate along specific dimensions using the **`dims`** argument:
+
+`dims=1` → Operates **down rows** (returns **column-wise** results; e.g., average response at each time point).
+
+`dims=2` → Operates **across columns** (returns **row-wise** results; e.g., average response per patient).
+
+- *Imagine, we get response data for 3 patients across 4 time points,*
+
+```{julia}
+data = [5.2 4.8 3.1 2.5;
+        6.0 5.5 4.0 3.0;
+        4.5 3.8 2.9 2.0]
+```
+
+- *Calculate mean response at each time point and per patient:*
+
+```{julia}
+# Mean response at each time point (across patients)
+mean_per_time = mean(data, dims = 1)
+```
+
+```{julia}
+# Mean response per patient (across time points)
+mean_per_patient = mean(data, dims=2)
+```
+
+----------------------------------------------------------------------------------------------------
+
+# Conclusion⚡
+
+Learning the basics of Julia enables us to perform statistical analysis more efficiently and intuitively. With its high-performance computing capabilities, built-in functions, and powerful packages, Julia allows us to process and visualize data quickly. By leveraging Julia’s flexible syntax and customizable functions, we can streamline complex statistical tasks, making data analysis faster, more accurate, and easier to interpret.
