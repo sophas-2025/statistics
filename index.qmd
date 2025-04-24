@@ -3,3 +3,18 @@ title: "Statistics"
 ---
 
 A list of all weekwise answers to practice problems.
+
+\ 
+
+## Tutorials
+- [Statistics with Julia](./docs/julia-stat-intro/julia-stat.html)
+
+## Practice Problems
+- [Week 1](./docs/week-1/pwq-1.html)
+- [Week 2](./docs/week-2/pwq-2.html)
+- [Week 3](./docs/week-3/pwq-3.html)
+
+## Practice Answers
+- [Week 1](./docs/week-1/pwa-1.html)
+- [Week 2](./docs/week-2/pwa-2.html)
+- [Week 3](./docs/week-3/pwa-3.html)
